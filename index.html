@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ريغ | إكسسوارات تقنية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #eef3fa;
+    --ink-dim: #7f92b0;
+    --blueprint: #0f1b2e;
+    --blueprint-panel: #142640;
+    --grid-line: #1e3454;
+    --bronze: #d99a4e;
+    --bronze-dim: #8a6530;
+    --signal: #6fcf97;
+    --danger: #e0685f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background:
+      linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 44px 44px,
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 44px 44px,
+      var(--blueprint);
+    background-blend-mode: normal;
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 5vw;
+    border-bottom: 1px solid var(--grid-line);
+    position: sticky;
+    top: 0;
+    background: rgba(15, 27, 46, 0.9);
+    backdrop-filter: blur(8px);
+    z-index: 30;
+  }
+
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .logo .mark {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--bronze);
+    border: 1px solid var(--bronze-dim);
+    padding: 3px 7px;
+    border-radius: 4px;
+  }
+
+  .logo .name {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .cart-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blueprint-panel);
+    border: 1px solid var(--grid-line);
+    color: var(--ink);
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    transition: border-color 0.2s;
+  }
+
+  .cart-btn:hover { border-color: var(--bronze-dim); }
+
+  .cart-count {
+    background: var(--bronze);
+    color: #201200;
+    font-weight: 700;
+    border-radius: 999px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    padding: 0 5px;
+  }
+
+  .hero {
+    padding: 70px 5vw 50px;
+    max-width: 700px;
+  }
+
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--bronze);
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.25;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .hero p {
+    color: var(--ink-dim);
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 480px;
+  }
+
+  .catalog {
+    padding: 10px 5vw 90px;
+  }
+
+  .catalog-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 26px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--grid-line);
+  }
+
+  .catalog-head h2 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .catalog-head .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-dim);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 22px;
+  }
+
+  .product {
+    background: var(--blueprint-panel);
+    border: 1px solid var(--grid-line);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .product:hover {
+    border-color: var(--bronze-dim);
+    transform: translateY(-3px);
+  }
+
+  .product .corner {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: var(--bronze-dim);
+    opacity: 0.6;
+  }
+  .product .corner.tl { top: 8px; left: 8px; border-top: 2px solid; border-right: 2px solid; }
+  .product .corner.br { bottom: 8px; right: 8px; border-bottom: 2px solid; border-left: 2px solid; }
+
+  .product .icon-frame {
+    width: 100%;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .product svg { width: 76px; height: 76px; stroke: var(--ink); fill: none; stroke-width: 1.3; }
+
+  .product .name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .product .spec {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .product .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .product .price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--bronze);
+  }
+
+  .add-btn {
+    background: transparent;
+    border: 1px solid var(--bronze-dim);
+    color: var(--bronze);
+    padding: 7px 14px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .add-btn:hover {
+    background: var(--bronze);
+    color: #201200;
+  }
+
+  .add-btn.added {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: #0d2417;
+  }
+
+  /* Cart drawer */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 10, 18, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    z-index: 40;
+  }
+
+  .drawer-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    left: -380px;
+    width: 340px;
+    max-width: 88vw;
+    height: 100%;
+    background: var(--blueprint-panel);
+    border-right: 1px solid var(--grid-line);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    transition: left 0.3s ease;
+  }
+
+  .drawer.open { left: 0; }
+
+  .drawer-head {
+    padding: 20px;
+    border-bottom: 1px solid var(--grid-line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .drawer-head h3 { font-size: 16px; font-weight: 700; }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--ink-dim);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .drawer-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 20px;
+  }
+
+  .drawer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--grid-line);
+    font-size: 13px;
+  }
+
+  .drawer-item .name { font-weight: 600; }
+  .drawer-item .qty-price { color: var(--ink-dim); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .empty-msg {
+    color: var(--ink-dim);
+    font-size: 13px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .drawer-foot {
+    padding: 20px;
+    border-top: 1px solid var(--grid-line);
+  }
+
+  .drawer-foot .total-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    background: var(--bronze);
+    color: #201200;
+    border: none;
+    padding: 13px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .checkout-btn:hover { background: #e6ac6a; }
+
+  .toast {
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--signal);
+    color: #0d2417;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 60;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="mark">RG-01</span>
+    <span class="name">ريغ</span>
+  </div>
+  <button class="cart-btn" id="cartBtn">
+    🛒 السلة
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">مواصفات دقيقة، تجهيز يومي</div>
+  <h1>إكسسوارات تقنية مصمّمة للاستخدام الفعلي، لا للعرض فقط</h1>
+  <p>كل قطعة مختارة على أساس المواد والأداء، مو بس الشكل. جهّز مكتبك أو حقيبتك بأدوات تدوم.</p>
+</section>
+
+<section class="catalog">
+  <div class="catalog-head">
+    <h2>الكتالوج</h2>
+    <span class="count" id="itemCount">6 منتجات</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</section>
+
+<div class="drawer-overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>سلة المشتريات</h3>
+    <button class="close-btn" id="closeDrawer">✕</button>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <div class="total-line">
+      <span>الإجمالي</span>
+      <span id="totalPrice">0 ر.س</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn">إتمام الشراء</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const PRODUCTS = [
+    {
+      id: 'earbuds',
+      name: 'سماعة لاسلكية RG-Pod',
+      spec: 'بطارية 28 ساعة · مقاومة عرق IPX5',
+      price: 249,
+      icon: `<circle cx="30" cy="38" r="14"/><circle cx="46" cy="38" r="14"/><path d="M30 24 C30 12 46 12 46 24"/>`
+    },
+    {
+      id: 'keyboard',
+      name: 'لوحة مفاتيح ميكانيكية RG-Type',
+      spec: 'مفاتيح Brown · اتصال لاسلكي ثلاثي',
+      price: 389,
+      icon: `<rect x="10" y="26" width="56" height="26" rx="4"/><line x1="18" y1="34" x2="18" y2="34"/><line x1="26" y1="34" x2="26" y2="34"/><line x1="34" y1="34" x2="34" y2="34"/><line x1="42" y1="34" x2="42" y2="34"/><line x1="50" y1="34" x2="50" y2="34"/><line x1="58" y1="34" x2="58" y2="34"/><line x1="18" y1="44" x2="58" y2="44"/>`
+    },
+    {
+      id: 'hub',
+      name: 'موزع USB-C من 7 مداخل',
+      spec: 'HDMI 4K · شحن 100W · قراءة بطاقات',
+      price: 179,
+      icon: `<rect x="12" y="22" width="52" height="34" rx="6"/><line x1="22" y1="30" x2="22" y2="30"/><line x1="30" y1="30" x2="30" y2="30"/><line x1="38" y1="30" x2="38" y2="30"/><line x1="46" y1="30" x2="46" y2="30"/><line x1="54" y1="30" x2="54" y2="30"/><line x1="22" y1="46" x2="54" y2="46"/>`
+    },
+    {
+      id: 'charger',
+      name: 'شاحن لاسلكي RG-Dock',
+      spec: 'شحن سريع 15W · قاعدة مغناطيسية',
+      price: 129,
+      icon: `<rect x="16" y="42" width="44" height="8" rx="2"/><path d="M22 42 L34 14 L44 14 L38 30 L50 30 L30 50"/>`
+    },
+    {
+      id: 'stand',
+      name: 'حامل لابتوب قابل للطي',
+      spec: 'ألمنيوم · 6 زوايا ارتفاع',
+      price: 99,
+      icon: `<path d="M14 50 L26 22 L50 22 L62 50 Z"/><line x1="14" y1="50" x2="62" y2="50"/><line x1="26" y1="22" x2="26" y2="14"/><line x1="50" y1="22" x2="50" y2="14"/>`
+    },
+    {
+      id: 'sleeve',
+      name: 'حقيبة لابتوب واقية 14 بوصة',
+      spec: 'مقاومة ماء · بطانة داخلية ناعمة',
+      price: 149,
+      icon: `<rect x="10" y="18" width="56" height="40" rx="5"/><line x1="10" y1="30" x2="66" y2="30"/><rect x="26" y="10" width="24" height="10" rx="3"/>`
+    }
+  ];
+
+  let cart = {};
+
+  const grid = document.getElementById('grid');
+  const cartCountEl = document.getElementById('cartCount');
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('overlay');
+  const drawerItems = document.getElementById('drawerItems');
+  const totalPriceEl = document.getElementById('totalPrice');
+  const toast = document.getElementById('toast');
+
+  function renderProducts() {
+    grid.innerHTML = PRODUCTS.map(p => `
+      <div class="product">
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <div class="icon-frame">
+          <svg viewBox="0 0 76 76" stroke-linecap="round" stroke-linejoin="round">${p.icon}</svg>
+        </div>
+        <div class="name">${p.name}</div>
+        <div class="spec">${p.spec}</div>
+        <div class="foot">
+          <span class="price">${p.price} ر.س</span>
+          <button class="add-btn" data-id="${p.id}">أضف للسلة</button>
+        </div>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => addToCart(btn.dataset.id, btn));
+    });
+  }
+
+  function addToCart(id, btn) {
+    cart[id] = (cart[id] || 0) + 1;
+    updateCartUI();
+    showToast('تمت الإضافة إلى السلة');
+
+    if (btn) {
+      btn.textContent = 'تمت الإضافة ✓';
+      btn.classList.add('added');
+      setTimeout(() => {
+        btn.textContent = 'أضف للسلة';
+        btn.classList.remove('added');
+      }, 1000);
+    }
+  }
+
+  function removeFromCart(id) {
+    delete cart[id];
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+    cartCountEl.textContent = totalItems;
+
+    const entries = Object.entries(cart);
+    if (entries.length === 0) {
+      drawerItems.innerHTML = '<div class="empty-msg">السلة فارغة حالياً</div>';
+      totalPriceEl.textContent = '0 ر.س';
+      return;
+    }
+
+    let total = 0;
+    drawerItems.innerHTML = entries.map(([id, qty]) => {
+      const p = PRODUCTS.find(x => x.id === id);
+      const lineTotal = p.price * qty;
+      total += lineTotal;
+      return `
+        <div class="drawer-item">
+          <div>
+            <div class="name">${p.name}</div>
+            <div class="qty-price">${qty} × ${p.price} ر.س</div>
+          </div>
+          <button class="remove-btn" data-id="${id}">إزالة</button>
+        </div>
+      `;
+    }).join('');
+
+    totalPriceEl.textContent = total + ' ر.س';
+
+    drawerItems.querySelectorAll('.remove-btn').forEach(btn => {
+      btn.addEventListener('click', () => removeFromCart(btn.dataset.id));
+    });
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1600);
+  }
+
+  document.getElementById('cartBtn').addEventListener('click', () => {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+  });
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+
+  document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  document.getElementById('checkoutBtn').addEventListener('click', () => {
+    if (Object.keys(cart).length === 0) {
+      showToast('السلة فارغة');
+      return;
+    }
+    cart = {};
+    updateCartUI();
+    closeDrawer();
+    showToast('تم إتمام الطلب بنجاح 🎉');
+  });
+
+  renderProducts();
+  updateCartUI();
+</script>
+
+</body>
+</html>
