@@ -1,2 +1,2 @@
 ﻿# -ext-vscode.github-authentication
-This repository documents the setup steps for VS Code GitHub authentication extension.
+This repository documents the setup step
